@@ -31,6 +31,7 @@ $(document).ready(() ->
   )
   $(window).resize()
 
+
   # keyboard input
   key_w = false
   key_s = false
@@ -57,6 +58,8 @@ $(document).ready(() ->
       key_left = true
     if e.which == 39
       key_right = true
+    if e.which == "R".charCodeAt(0)
+      device.random_sampling = !device.random_sampling
   )
   $(window).keyup((e) ->
     if e.which == "W".charCodeAt(0)
@@ -76,6 +79,8 @@ $(document).ready(() ->
     if e.which == 39
       key_right = false
   )
+
+  device.random_sampling = false
 
   # set up the scene
   device.context = context

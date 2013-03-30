@@ -198,8 +198,13 @@ render_block = (x, y, width, height, samples, index) ->
     cell_height = height / rows
 
     for i in [0...new_samples]
-      the_x = x + (i % columns + 0.5) * cell_width
-      the_y = y + (Math.floor(i / columns) + 0.5) * cell_height
+      if window.device.random_sampling == true
+        the_x = x + Math.random() * width
+        the_y = y + Math.random() * height
+      else
+        the_x = x + (i % columns + 0.5) * cell_width
+        the_y = y + (Math.floor(i / columns) + 0.5) * cell_height
+
       the_sample = sample(the_x, the_y).times(1)
       the_sample.x = the_x
       the_sample.y = the_y
@@ -246,3 +251,4 @@ window.render = () ->
   window.device.context.fillStyle = "#fff"
   window.device.context.fillRect(device.x, device.y, device.width, device.height)
   render_block(device.x, device.y, device.width, device.height, [], 0)
+
