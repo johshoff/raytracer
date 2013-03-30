@@ -47,6 +47,12 @@ class window.Color
   # returns a CSS-compatible string
   to_str: () -> "rgb(" + String(Math.round(@r * 255)) + ", " + String(Math.round(@g * 255)) + ", " + String(Math.round(@b * 255)) + ")";
 
+  # returns a CSS-compatible string
+  to_str_with_alpha: (alpha) -> "rgba(" + String(Math.round(@r * 255)) + ", " +
+                                          String(Math.round(@g * 255)) + ", " +
+                                          String(Math.round(@b * 255)) + ", " +
+                                          String(           alpha    ) + ")";
+
   # return the sum of this and another color
   plus: (other) ->
     return new Color(Math.min(@r + other.r, 1), Math.min(@g + other.g, 1), Math.min(@b + other.b, 1))
@@ -229,7 +235,7 @@ render_block = (x, y, width, height, samples, index) ->
 
   # if the deviation is small, just render the average color
   if (deviation < 1 / window.device.quality) or width * height <= 64
-    window.device.context.fillStyle = average.to_str()
+    window.device.context.fillStyle = average.to_str_with_alpha(0.1)
     window.device.context.fillRect(x - 0.5, y - 0.5, width + 1, height + 1)
 
     #window.device.context.fillStyle = "#f00"
@@ -248,7 +254,5 @@ render_block = (x, y, width, height, samples, index) ->
 # render the scene
 window.render = () ->
   # render the scene as a huge block
-  window.device.context.fillStyle = "#fff"
-  window.device.context.fillRect(device.x, device.y, device.width, device.height)
   render_block(device.x, device.y, device.width, device.height, [], 0)
 
