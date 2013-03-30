@@ -242,14 +242,15 @@ render_block = (x, y, width, height, samples, index) ->
     #for my_sample in samples
     #  window.device.context.fillRect(my_sample.x, my_sample.y, 2, 2)
   else
+    pivot = Math.random()
     if width > height
-      threshold = x + width * 0.5
-      render_block(x,               y,                width * 0.5, height, samples.filter((e) -> e.x < threshold), index + 1)
-      render_block(x + width * 0.5, y,                width * 0.5, height, samples.filter((e) -> e.x >= threshold), index + 1)
+      threshold = x + width * pivot
+      render_block(x,                 y,                width *    pivot , height, samples.filter((e) -> e.x <  threshold), index + 1)
+      render_block(x + width * pivot, y,                width * (1-pivot), height, samples.filter((e) -> e.x >= threshold), index + 1)
     else
-      threshold = y + height * 0.5
-      render_block(x,               y,                width, height * 0.5, samples.filter((e) -> e.y < threshold), index + 1)
-      render_block(x,               y + height * 0.5, width, height * 0.5, samples.filter((e) -> e.y >= threshold), index + 1)
+      threshold = y + height * pivot
+      render_block(x,               y,                  width, height *    pivot , samples.filter((e) -> e.y <  threshold), index + 1)
+      render_block(x,               y + height * pivot, width, height * (1-pivot), samples.filter((e) -> e.y >= threshold), index + 1)
 
 # render the scene
 window.render = () ->
